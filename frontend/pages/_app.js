@@ -5,6 +5,12 @@ import Layout from "./components/Layout";
 import withData from "../lib/apollo";
 
 class MyApp extends App {
+  componentDidMount() {
+    if (typeof window === "undefined") {
+      return;
+    }
+  }
+
   render() {
     const { Component, pageProps } = this.props;
     return (

@@ -36,27 +36,29 @@ function RestaurantList(props) {
       return (
         <Row>
           {searchQuery.map((res) => (
-            <Col xs="6" sm="4" key={res.id}>
-              <Card style={{ margin: "0 0.5rem 20px 0.5rem" }}>
-                <CardImg
-                  top
-                  style={{ height: 250 }}
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${res.image[0].url}`}
-                />
-                <CardBody>
-                  <CardTitle>{res.name}</CardTitle>
-                  <CardText>{res.description}</CardText>
-                </CardBody>
-                <div className="card-footer">
-                  <Link
-                    as={`/restaurants/${res.name}`}
-                    href={`/restaurants?id=${res.id}`}
-                  >
-                    <a className="btn btn-primary">View</a>
-                  </Link>
-                </div>
-              </Card>
-            </Col>
+            <>
+              <Col xs="6" sm="4" key={res.id}>
+                <Card style={{ margin: "0 0.5rem 20px 0.5rem" }}>
+                  <CardImg
+                    top
+                    style={{ height: 250 }}
+                    src={`${process.env.NEXT_PUBLIC_API_URL}${res.image[0].url}`}
+                  />
+                  <CardBody>
+                    <CardTitle>{res.name}</CardTitle>
+                    <CardText>{res.description}</CardText>
+                  </CardBody>
+                  <div className="card-footer">
+                    <Link
+                      as={`/restaurants/${res.id}`}
+                      href={`/restaurants?id=${res.id}`}
+                    >
+                      <a className="btn btn-primary">View</a>
+                    </Link>
+                  </div>
+                </Card>
+              </Col>
+            </>
           ))}
 
           <style jsx global>
