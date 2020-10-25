@@ -12,6 +12,8 @@ import {
   Label,
   Input,
 } from "reactstrap";
+import { registerUser } from "../lib/auth";
+import { Router } from "next/router";
 
 const Register = () => {
   const [data, setData] = useState({ email: "", username: "", password: "" });
@@ -66,7 +68,7 @@ const Register = () => {
                     <Label>Email</Label>
                     <Input
                       onChange={(e) =>
-                        (setData = { ...data, email: e.target.value })
+                        setData({ ...data, email: e.target.value })
                       }
                       value={data.email}
                       type="email"
@@ -95,13 +97,14 @@ const Register = () => {
                     <Button
                       style={{ float: "right", width: 120 }}
                       color="primary"
-                      disbled={loading}
+                      disabled={loading}
                       onClick={() => {
                         setLoading(true);
                         registerUser(data.username, data.email, data.password)
                           .then((res) => {
                             appContext.setUser(res.data.user);
                             setLoading(false);
+                            Router.push("/");
                           })
                           .catch((err) => {
                             setError(err.response.data);
