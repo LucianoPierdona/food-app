@@ -28,7 +28,7 @@ const Login = (props) => {
   });
 
   function onChange(event) {
-    updateData({ ...data, [event.target.name]: event.target.value });
+    setData({ ...data, [event.target.name]: event.target.value });
   }
 
   return (
