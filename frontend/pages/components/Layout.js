@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
 import { Nav, NavItem } from "reactstrap";
 import { Container } from "next/app";
+import AppContext from "../../context/AppContext";
+import { logout } from "../../lib/auth";
 
 export default function Layout(props) {
-  const title = "Welcome to Nextjs";
+  const title = "Food App";
+  const { user, setUser } = useContext(AppContext);
 
   return (
     <div>
@@ -32,6 +35,9 @@ export default function Layout(props) {
             a:hover {
               color: blue;
             }
+            .flex {
+              display: flex;
+            }
           `}
         </style>
         <Nav className="navbar navbar-dark bg-dark">
@@ -41,17 +47,37 @@ export default function Layout(props) {
             </Link>
           </NavItem>
 
-          <NavItem className="ml-auto">
-            <Link href="/login">
-              <a className="nav-link">Sign In</a>
-            </Link>
-          </NavItem>
+          <div className="ml-auto flex">
+            <NavItem className="ml-auto">
+              {user ? (
+                <h5>{user.username}</h5>
+              ) : (
+                <Link href="/register">
+                  <a className="nav-link"> Sign up</a>
+                </Link>
+              )}
+            </NavItem>
 
-          <NavItem>
-            <Link href="/register">
-              <a className="nav-link">Sign Up</a>
-            </Link>
-          </NavItem>
+            <NavItem className="ml-auto">
+              {user ? (
+                <Link href="/">
+                  <a
+                    className="nav-link"
+                    onClick={() => {
+                      logout();
+                      setUser(null);
+                    }}
+                  >
+                    Logout
+                  </a>
+                </Link>
+              ) : (
+                <Link href="/login">
+                  <a className="nav-link">Sign In</a>
+                </Link>
+              )}
+            </NavItem>
+          </div>
         </Nav>
       </header>
       <Container>{props.children}</Container>
